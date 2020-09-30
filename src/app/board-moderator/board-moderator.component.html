@@ -1,0 +1,171 @@
+<div class="container">
+
+
+
+  <div *ngIf="authorized">
+
+    <label>Select Program To View Applications</label>
+    <select class="browser-default custom-select mb-4" [(ngModel)]="programID" name="programID" #mySelect
+      (change)='onOptionsSelected(mySelect.value)' required>
+      <option value="1" disabled selected hidden>Choose Program to view Applications</option>
+      <option value="733">Anthropology and Museum Ethnography</option>
+      <option value="736">Archaeology</option>
+      <option value="737">Area Studies</option>
+      <option value="655">Art (Ruskin School of Art)</option>
+      <option value="700">Biochemistry</option>
+      <option value="6790">Centre for Teaching and Learning</option>
+      <option value="676">Chemistry</option>
+      <option value="649">Classics</option>
+      <option value="704">Clinical Medicine</option>
+      <option value="701">Clinical Neurosciences</option>
+      <option value="5672">Clinical Psychology</option>
+      <option value="6784">Comparative Criticism and Translation</option>
+      <option value="677">Computer Science</option>
+      <option value="3388">Continuing Education (Humanities)</option>
+      <option value="3385">Continuing Education (Mathematical, Physical and Life Sciences)</option>
+      <option value="3382">Continuing Education (Medical and Health Sciences)</option>
+      <option value="3391">Continuing Education (Social Sciences)</option>
+      <option value="739">Criminology</option>
+      <option value="673">Doctoral Training Centre (Medical Sciences)</option>
+      <option value="697">Doctoral Training Centre (Mathematical, Physical and Life Sciences)</option>
+      <option value="679">Earth Sciences</option>
+      <option value="740">Economics</option>
+      <option value="742">Education</option>
+      <option value="680">Engineering Science</option>
+      <option value="650">English Language and Literature</option>
+      <option value="7565">Environmental Research</option>
+      <option value="706">Experimental Psychology</option>
+      <option value="653">Film Aesthetics</option>
+      <option value="743">Geography and the Environment</option>
+      <option value="656">History</option>
+      <option value="658">History of Art</option>
+      <option value="7553">Humanities Interdisciplinary Courses</option>
+      <option value="746">International Development</option>
+      <option value="748">Law</option>
+      <option value="661">Linguistics, Philology and Phonetics</option>
+      <option value="749">Management Studies (Saïd Business School)</option>
+      <option value="682">Materials</option>
+      <option value="685">Mathematics</option>
+      <option value="5675">Medical School</option>
+      <option value="710">Medicine (Radcliffe Department of Medicine)</option>
+      <option value="662">Medieval and Modern Languages</option>
+      <option value="664">Music</option>
+      <option value="3789">Neuroscience</option>
+      <option value="716">Oncology</option>
+      <option value="665">Oriental Studies</option>
+      <option value="718">Orthopaedics, Rheumatology and Musculoskeletal Sciences</option>
+      <option value="751">Oxford Internet Institute</option>
+      <option value="721">Paediatrics</option>
+      <option value="722">Pathology</option>
+      <option value="724">Pharmacology</option>
+      <option value="667">Philosophy</option>
+      <option value="686">Physics</option>
+      <option value="725">Physiology, Anatomy and Genetics</option>
+      <option value="689">Plant Sciences</option>
+      <option value="752">Politics and International Relations</option>
+      <option value="727">Population Health</option>
+      <option value="728">Primary Care Health Sciences</option>
+      <option value="730">Psychiatry</option>
+      <option value="755">Public Policy (Blavatnik School of Government)</option>
+      <option value="757">Social Policy and Intervention</option>
+      <option value="758">Socio-Legal Studies</option>
+      <option value="761">Sociology</option>
+      <option value="691">Statistics</option>
+      <option value="731">Surgical Sciences</option>
+      <option value="668">Theology and Religion</option>
+      <option value="713">Women's and Reproductive Health</option>
+      <option value="671">Women's Studies</option>
+      <option value="694">Zoology</option>
+    </select>
+
+    <div class="container" *ngIf="applicationsMatched.length>0">
+      <h2>Applications List</h2>
+
+      <table mdbTable class="table table-striped">
+        <thead class="black white-text">
+          <th>Application ID</th>
+          <th>FullName</th>
+          <th>EmailId</th>
+          <th>Status</th>
+          <th>View Application</th>
+
+        </thead>
+        <tr *ngFor="let application of applicationsMatched">
+          <td>{{application.id}}</td>
+          <td>{{application.fullName}}</td>
+          <td>{{application.emailId}}</td>
+          <td>{{application.status}}</td>
+          <td><button mdbBtn color="info" (click)="viewApplication(application)">View Application</button></td>
+
+        </tr>
+      </table>
+
+    </div>
+    <div class="container" *ngIf="ifUpdatingApplications">
+
+      <table mdbTable>
+        <thead class="black white-text">
+          <th colspan="2">Application Details</th>
+
+        </thead>
+      <tr>
+        <td>Application ID</td>
+        <td>{{selectedApplication.id}}
+
+        </td>
+      </tr>
+      <tr>
+        <td>Full Name of the Applicant</td>
+        <td>{{selectedApplication.fullName}}
+
+        </td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{selectedApplication.emailId}}
+
+        </td>
+      </tr>
+      <tr>
+        <td>Date of Birth</td>
+        <td>{{selectedApplication.dateOfBirth}}
+
+        </td>
+      </tr>
+      <tr>
+        <td>Highest Qualification</td>
+        <td>{{selectedApplication.highestQualification}}
+        </td>
+      </tr>
+      <tr>
+        <td>Marks Obtained</td>
+        <td>{{selectedApplication.marksObtained}}
+        </td>
+      </tr>
+      <tr>
+        <td>Applicant Goals</td>
+        <td>{{selectedApplication.goals}}
+        </td>
+      </tr>
+      <tr>
+        <td>Application status</td>
+        <td><button mdbBtn color="success" (click)="acceptApplication()">Accept</button>
+          <button mdbBtn color="danger" (click)="rejectApplication()">Reject</button>
+        </td>
+      </tr>
+      <tr *ngIf="accepted">
+        <td>Date of Interview</td>
+        <td>  <mat-form-field class="example-full-width">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [min]="date" [matDatepicker]="picker2" (dateInput)="addEndDateEvent($event)"
+            class="form-control" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        </td>
+      </tr>
+      <tr><td colspan="2"><button mdbBtn size="lg" color="info" (click)="updateApplication(application)">Update Application</button></td></tr>
+    </table>
+    </div>
+  </div>
+</div>

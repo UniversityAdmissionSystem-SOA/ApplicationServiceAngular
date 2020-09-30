@@ -1,0 +1,40 @@
+<div class="container">
+
+
+
+  <div *ngIf="authorized">
+
+    <div class="container">
+      <h2>Applications Report</h2>
+
+      <table mdbTable>
+        <thead class="black white-text" *ngIf="applications.length>0">
+          <th>Application ID</th>
+          <th>FullName</th>
+          <th>Date Of birth</th>
+          <th>Highest Qualification</th>
+          <th>MarksObtained</th>
+          <th>Goals</th>
+          <th>EmailId</th>
+          <th>Scheduled Program Id</th>
+          <th>Status</th>
+          <th>Date Of Interview</th>
+        </thead>
+        <tr *ngFor="let application of applications">
+          <td>{{application.id}}</td>
+          <td>{{application.fullName}}</td>
+          <td>{{application.dateOfBirth}}</td>
+          <td>{{application.highestQualification}}</td>
+          <td>{{application.marksObtained}}</td>
+          <td>{{application.goals}}</td>
+          <td>{{application.emailId}}</td>
+          <td>{{application.scheduledProgramId}}</td>
+          <td>{{application.status}}</td>
+          <td>{{application.dateOfInterview}}</td>
+
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
